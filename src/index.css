@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url("/font/inter/Inter-Regular.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/font/inter/Inter-Medium.woff") format("woff");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/font/inter/Inter-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/font/inter/Inter-Bold.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --color-primary: #111111;
+  --color-background: #f7f4f0;
+  --color-accent: #e84225;
+  --color-accent-dark: #d33921;
+  --font-sans: "Inter", sans-serif;
+  --breakpoint-xs: 480px;
+}
+
+body {
+  @apply font-sans text-stone-700 bg-background;
+}
+
+@layer components {
+  #cus-support {
+    @apply w-full h-auto px-20 bg-white hidden xl:flex items-center justify-end gap-4;
+  }
+
+  #navbar {
+    @apply w-full h-auto px-[5%] sm:px-12 lg:px-20 bg-white;
+  }
+
+  #hero {
+    @apply w-full min-h-screen py-10 lg:py-20 flex flex-col items-center;
+
+    #canvas {
+      @apply w-auto max-w-lg sm:max-w-xl h-[60vh]! sm:h-[70vh]! mt-[-30%] xs:mt-[-20%] md:mt-0 relative cursor-grab active:cursor-grabbing;
+    }
+  }
+
+  #product-reference {
+    @apply w-full h-auto;
+  }
+
+  #promotion {
+    @apply w-full h-auto relative mb-20;
+  }
+
+  #shopping {
+    @apply w-full h-auto mb-20;
+  }
+
+  #product-interested {
+    @apply w-full h-auto mb-20;
+  }
+
+  #product-detail {
+    @apply w-full h-auto mb-20 flex flex-col lg:flex-row;
+  }
+
+  #footer {
+    @apply w-full h-auto bg-stone-900;
+  }
+}
