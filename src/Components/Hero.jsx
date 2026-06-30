@@ -16,7 +16,7 @@ const Hero = () => {
         Gear Up <span className="text-accent">Every</span> Season{" "}
         <span className="text-accent">Every</span> Activities
       </h1>
-      <Suspense fallback={<div className="w-full h-100" />}>
+      <Suspense fallback={<div className="w-full h-[60vh] sm:h-[70vh]" />}>
         <ShoeCanvas currentColor={currentColor} />
       </Suspense>
       <ul className="flex items-center">
