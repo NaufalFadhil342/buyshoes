@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import ShoeModel from "./three/ShoeModel";
-import StudioLights from "./three/StudioLights";
-import { ContactShadows } from "@react-three/drei";
+import { lazy, Suspense, useState } from "react";
 import { colorDrafts } from "../LocalData/hero-helper";
+
+const ShoeCanvas = lazy(() => import("../Components/model/ShoeCanvas"));
 
 const Hero = () => {
   const [selectedColor, setSelectedColor] = useState("white");
@@ -18,18 +16,9 @@ const Hero = () => {
         Gear Up <span className="text-accent">Every</span> Season{" "}
         <span className="text-accent">Every</span> Activities
       </h1>
-      <Canvas
-        id="canvas"
-        camera={{ position: [0, 0, 7], fov: 50, near: 0.1, far: 100 }}
-      >
-        <StudioLights />
-        <ShoeModel changeColor={currentColor} />
-        <ContactShadows
-          rotation-x={Math.PI / 2}
-          position={[0, -2.25, -0.1]}
-          opacity={0.07}
-        />
-      </Canvas>
+      <Suspense fallback={<div className="w-full h-100" />}>
+        <ShoeCanvas currentColor={currentColor} />
+      </Suspense>
       <ul className="flex items-center">
         {colorDrafts.map((color, index) => (
           <li
