@@ -43,7 +43,10 @@ const ProductCategoryItem = ({
                 />
                 <button
                   className="absolute z-3 top-4 right-4 hover:cursor-pointer"
-                  onClick={() => toggleFavorite(selectedItem)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(selectedItem);
+                  }}
                 >
                   {isFavorite(item.product_id) ? (
                     <FavoriteIcon className="size-6 text-red-600" />

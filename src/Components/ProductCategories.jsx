@@ -25,7 +25,6 @@ const ProductCategories = () => {
     const fetchCategories = async () => {
       const data = await getProductCategories();
       setProductCategories(data);
-      console.log("product-categories", data);
     };
 
     fetchCategories();

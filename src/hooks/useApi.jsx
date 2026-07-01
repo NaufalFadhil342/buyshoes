@@ -51,7 +51,6 @@ export const useProducts = () => {
         if (error) throw error;
 
         setProducts(data ?? []);
-        console.log("products", data);
       } catch (err) {
         setError(err);
       } finally {
@@ -91,7 +90,6 @@ export const useProductDetail = (slug) => {
         }
 
         setProduct(data ?? null);
-        console.log(data);
       } catch (err) {
         setError(err);
       } finally {
