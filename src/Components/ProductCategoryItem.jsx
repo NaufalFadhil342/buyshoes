@@ -21,7 +21,7 @@ const ProductCategoryItem = ({
             id: item.product_id,
             name: product?.name,
             price: product?.price,
-            image: item.images,
+            images: item.images,
             category: product?.category,
           };
 

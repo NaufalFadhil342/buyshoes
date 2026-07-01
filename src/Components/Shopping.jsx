@@ -91,7 +91,7 @@ const Shopping = () => {
                         id: prd.id,
                         name: prd.name,
                         price: prd.price,
-                        image: item.images,
+                        images: item.images,
                         category: prd.category,
                       };
 

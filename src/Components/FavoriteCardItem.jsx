@@ -15,7 +15,7 @@ const FavoriteCardItem = () => {
           <span className="block w-34 h-20 overflow-hidden">
             <img
               className="w-full h-full object-cover object-center"
-              src={item.images}
+              src={item.images[0]}
               alt={item.name}
             />
           </span>
