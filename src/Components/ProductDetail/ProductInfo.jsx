@@ -38,7 +38,7 @@ const ProductInfo = ({
             );
           })}
         </ul>
-        <div className="w-fit lg:w-full p-4 border flex items-start gap-2 mt-6">
+        <div className="w-fit lg:w-full p-4 border border-primary flex items-start gap-2 mt-6">
           <InfoIcon className="size-6 text-stone-500" />
           <p className="text-stone-500">
             <span className="font-semibold text-stone-900">True to size.</span>{" "}
@@ -65,7 +65,7 @@ const ProductInfo = ({
           Add to Bag
         </button>
         <button
-          className="w-full h-14 flex items-center justify-center border  hover:cursor-pointer"
+          className="w-full h-14 flex items-center justify-center border border-primary hover:cursor-pointer"
           onClick={() => toggleFavorite(favoriteItem)}
         >
           {isFavorite(product.id) ? "Favorited" : "Add to Favorite"}

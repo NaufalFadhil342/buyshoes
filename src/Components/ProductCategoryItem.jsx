@@ -38,8 +38,8 @@ const ProductCategoryItem = ({
                   src={item.images[0]}
                   alt={product?.name}
                   loading="lazy"
-                  width={600}
-                  height={600}
+                  width={500}
+                  height={500}
                 />
                 <button
                   className="absolute z-3 top-4 right-4 hover:cursor-pointer"

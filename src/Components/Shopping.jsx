@@ -11,6 +11,7 @@ import {
 } from "../Components/Icons/draftIcon";
 import ExpandIcon from "@iconify-react/fe/expand";
 import { FavoriteContext } from "../context/FavoriteContext";
+import { Loading } from "./ui/Loading";
 
 const Shopping = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -39,7 +40,7 @@ const Shopping = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   return (
     <section id="shopping">
@@ -76,7 +77,7 @@ const Shopping = () => {
                     {prd.product_by_category?.length}{" "}
                     {prd.product_by_category?.length > 1 ? "Items" : "Item"}
                   </p>
-                  <span className="flex border">
+                  <span className="flex border border-stone-700">
                     {showItems === prd.id ? (
                       <CloseIcon className="size-5" />
                     ) : (
@@ -106,8 +107,8 @@ const Shopping = () => {
                               src={item.images[0]}
                               alt={prd.name}
                               loading="lazy"
-                              width={400}
-                              height={400}
+                              width={500}
+                              height={500}
                             />
                           </span>
                           <div className="flex flex-col justify-center px-4 w-full h-auto">

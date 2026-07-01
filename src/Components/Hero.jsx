@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { colorDrafts } from "../LocalData/hero-helper";
+import { Loading } from "./ui/Loading";
 
 const ShoeCanvas = lazy(() => import("../Components/model/ShoeCanvas"));
 
@@ -16,21 +17,21 @@ const Hero = () => {
         Gear Up <span className="text-accent">Every</span> Season{" "}
         <span className="text-accent">Every</span> Activities
       </h1>
-      <Suspense fallback={<div className="w-full h-[60vh] sm:h-[70vh]" />}>
+      <Suspense fallback={<Loading />}>
         <ShoeCanvas currentColor={currentColor} />
       </Suspense>
       <ul className="flex items-center">
         {colorDrafts.map((color, index) => (
           <li
             key={index}
-            className={`size-6 sm:size-8 ${color.colorName === selectedColor ? "border" : "border-none"}`}
+            className={`size-6 sm:size-8 ${color.colorName === selectedColor ? "border border-primary" : "border-none"}`}
             style={{ backgroundColor: color.hex }}
             onClick={() => setSelectedColor(color.colorName)}
           ></li>
         ))}
       </ul>
       <div className="w-auto h-auto mt-8">
-        <button className="rounded-full border-none w-auto text-sm sm:text-base h-10 px-4 sm:h-12 sm:px-6 bg-accent text-white font-medium hover:bg-accent-dark hover:cursor-pointer transition-color duration-200 ease-in-out">
+        <button className="rounded-full border-none w-auto text-sm sm:text-base h-10 px-4 sm:h-12 sm:px-6 bg-accent text-white font-medium hover:bg-accent-hover hover:cursor-pointer transition-color duration-200 ease-in-out">
           Shop Now
         </button>
       </div>

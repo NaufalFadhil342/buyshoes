@@ -17,6 +17,9 @@ const FavoriteCardItem = () => {
               className="w-full h-full object-cover object-center"
               src={item.images[0]}
               alt={item.name}
+              loading="lazy"
+              width={400}
+              height={400}
             />
           </span>
           <div className="w-full h-auto pl-4">

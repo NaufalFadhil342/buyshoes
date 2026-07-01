@@ -7,6 +7,7 @@ import ProductInfo from "./ProductInfo";
 import AccordionItem from "./AccordionItem";
 import Description from "./Description";
 import Detail from "./Detail";
+import { Loading } from "../ui/Loading";
 
 const selectSizes = [
   {
@@ -74,11 +75,11 @@ const ProductDetail = () => {
     }
   }, [product]);
 
-  if (loading) return <div className="product-detail">Loading...</div>;
+  if (loading) return <Loading />;
   if (error || !product)
     return (
       <p id="product-detail" className="text-xl font-bold">
-        Product Not Found
+        {error.message}
       </p>
     );
 

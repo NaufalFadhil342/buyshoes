@@ -4,13 +4,16 @@ import {
   favoriteOutline as FavoriteOutline,
 } from "../Components/Icons/draftIcon";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { FavoriteContext } from "../context/FavoriteContext";
+import { Loading } from "./ui/Loading";
 
 const ProductInterested = () => {
   const { products, loading } = useProducts();
   const { isFavorite, toggleFavorite } = useContext(FavoriteContext);
+  const navigate = useNavigate();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   return (
     <section id="product-interested">
@@ -32,19 +35,26 @@ const ProductInterested = () => {
             };
 
             return (
-              <li key={prd.id} className="flex-none w-72 h-auto">
+              <li
+                key={prd.id}
+                className="flex-none w-72 h-auto hover:cursor-pointer"
+                onClick={() => navigate(`/${prd.slug}`)}
+              >
                 <div className="w-full h-100 overflow-hidden relative">
                   <img
                     className="w-full h-full object-cover object-center"
                     src={item.images[0]}
                     alt={prd.id}
-                    width={600}
-                    height={600}
+                    width={500}
+                    height={500}
                     loading="lazy"
                   />
                   <button
                     className="absolute z-3 top-4 right-4 hover:cursor-pointer"
-                    onClick={() => toggleFavorite(selectedItem)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(selectedItem);
+                    }}
                   >
                     {isFavorite(prd.id) ? (
                       <Favorite className="size-6 text-red-600" />

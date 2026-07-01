@@ -11,7 +11,7 @@ const AccordionItem = ({ title, children, isOpen, onToggle }) => {
       >
         <>{title}</>
         {title === "Reviews" ? (
-          <button className="w-auto h-12 pl-4 pr-2 border bg-transparent flex items-center gap-2 font-medium hover:cursor-pointer">
+          <button className="w-auto h-12 pl-4 pr-2 border border-primary bg-transparent flex items-center gap-2 font-medium hover:cursor-pointer">
             <>Write a Review</>
             <ArrowRightIcon className="size-7" />
           </button>

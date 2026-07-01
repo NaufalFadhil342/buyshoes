@@ -6,7 +6,7 @@ const ProductGallery = ({ images, selectedImage, onSelect, productName }) => {
           return (
             <li
               key={index}
-              className={`flex-[0_0_40%] sm:flex-1 h-28 overflow-hidden ${selectedImage === src ? "border" : "border-transparent"}`}
+              className={`flex-[0_0_40%] sm:flex-1 h-28 overflow-hidden ${selectedImage === src ? "border border-primary" : "border-transparent"}`}
               onClick={() => onSelect(src)}
             >
               <img
