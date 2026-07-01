@@ -6,7 +6,7 @@ import SupportCenter from "./SupportCenter";
 
 const FooterMenu = () => {
   return (
-    <section className="w-full h-auto flex flex-col gap-6 border py-10 px-[5%] sm:px-12 lg:px-20">
+    <section className="w-full h-auto flex flex-col gap-6 py-10 px-[5%] sm:px-12 lg:px-20">
       <div className="text-[2em] font-bold text-white flex items-center lg:justify-center">
         <>buy</>
         <span className="flex underline text-accent">Shoes</span>
