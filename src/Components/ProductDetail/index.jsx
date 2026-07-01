@@ -79,10 +79,9 @@ const ProductDetail = () => {
   if (error || !product)
     return (
       <p id="product-detail" className="text-xl font-bold">
-        {error.message}
+        {error?.message ?? "Product Not Found"}
       </p>
     );
-
   const favoriteItem = {
     id: product.id,
     name: product.name,

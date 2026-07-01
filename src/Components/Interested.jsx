@@ -38,7 +38,17 @@ const ProductInterested = () => {
               <li
                 key={prd.id}
                 className="flex-none w-72 h-auto hover:cursor-pointer"
+                role="button"
+                tabIndex={0}
                 onClick={() => navigate(`/${prd.slug}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") navigate(`/${prd.slug}`);
+                }}
+              >                onClick={() => navigate(`/${prd.slug}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    navigate(`/${prd.slug}`);
+                }}
               >
                 <div className="w-full h-100 overflow-hidden relative">
                   <img

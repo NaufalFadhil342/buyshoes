@@ -39,10 +39,6 @@
   --color-accent-hover: oklch(0.575 0.195 32);
 }
 
-body {
-  @apply font-sans text-stone-700;
-}
-
 @layer components {
   #cus-support {
     @apply w-full h-auto px-20 bg-white hidden xl:flex items-center justify-end gap-4;
