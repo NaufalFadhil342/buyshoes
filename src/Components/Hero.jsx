@@ -1,6 +1,7 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, useState } from "react";
 import { colorDrafts } from "../LocalData/hero-helper";
 import { Loading } from "./ui/Loading";
+import LazyOnVisible from "./LazyOnVisible";
 
 const ShoeCanvas = lazy(() => import("../Components/model/ShoeCanvas"));
 
@@ -17,9 +18,13 @@ const Hero = () => {
         Gear Up <span className="text-accent">Every</span> Season{" "}
         <span className="text-accent">Every</span> Activities
       </h1>
-      <Suspense fallback={<Loading />}>
+      <LazyOnVisible
+        fallback={<Loading />}
+        className="w-full h-[60vh] flex justify-center"
+        rootMargin="200px"
+      >
         <ShoeCanvas currentColor={currentColor} />
-      </Suspense>
+      </LazyOnVisible>
       <ul className="flex items-center">
         {colorDrafts.map((color, index) => (
           <li

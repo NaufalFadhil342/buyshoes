@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router";
 import CusSupport from "../Components/Header/CusSupport";
 import Navbar from "../Components/Header/Navbar";
@@ -6,11 +6,18 @@ import { LanguageProvider } from "../context/LanguageContext";
 import { FavoriteProvider } from "../context/FavoriteContext";
 import { ShoppingProvider } from "../context/ShoppingContext";
 import Footer from "../Components/Footer";
+import { Loading } from "@/Components/ui/Loading";
+import { ensureSession } from "@/utils/supabase";
 
 const MainApp = () => {
+  const [sessionReady, setSessionReady] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    ensureSession().then(() => setSessionReady(true));
+  }, []);
 
   useEffect(() => {
     if (headerRef.current) {
@@ -27,6 +34,8 @@ const MainApp = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (!sessionReady) return <Loading />;
+
   return (
     <>
       <FavoriteProvider>
@@ -38,9 +47,11 @@ const MainApp = () => {
             </div>
             {isScrolled && <div style={{ height: headerHeight }} />}
 
-            <main>
-              <Outlet />
-            </main>
+            <Suspense fallback={<Loading />}>
+              <main>
+                <Outlet />
+              </main>
+            </Suspense>
 
             <Footer />
           </LanguageProvider>

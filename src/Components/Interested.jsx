@@ -4,14 +4,13 @@ import {
   favoriteOutline as FavoriteOutline,
 } from "../Components/Icons/draftIcon";
 import { useContext } from "react";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { Loading } from "./ui/Loading";
 
 const ProductInterested = () => {
   const { products, loading } = useProducts();
   const { isFavorite, toggleFavorite } = useContext(FavoriteContext);
-  const navigate = useNavigate();
 
   if (loading) return <Loading />;
 

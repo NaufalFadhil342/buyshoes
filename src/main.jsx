@@ -2,13 +2,15 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import MainApp from "./Router/MainApp.jsx";
-import ProductDetail from "./Components/ProductDetail";
+import { lazy } from "react";
+
+const MainApp = lazy(() => import("./Router/MainApp"));
+const ProductDetail = lazy(() => import("./Components/ProductDetail"));
 
 const createRouter = createBrowserRouter([
   {
     path: "/",
-    Component: MainApp,
+    element: <MainApp />,
     children: [
       {
         index: true,
@@ -16,7 +18,7 @@ const createRouter = createBrowserRouter([
       },
       {
         path: "/:slug",
-        Component: ProductDetail,
+        element: <ProductDetail />,
       },
     ],
   },

@@ -10,33 +10,38 @@ const FavoriteCardItem = () => {
 
   return (
     <ul className="w-full h-auto flex flex-col gap-4">
-      {limitFavorites.map((item) => (
-        <li key={item.id} className="w-full h-auto flex relative">
-          <span className="block w-34 h-20 overflow-hidden">
-            <img
-              className="w-full h-full object-cover object-center"
-              src={item.images[0]}
-              alt={item.name}
-              loading="lazy"
-              width={400}
-              height={400}
-            />
-          </span>
-          <div className="w-full h-auto pl-4">
-            <p className="font-semibold text-stone-900">{item.name}</p>
-            <span>${item.price}</span>
-            <p className="text-sm italic text-stone-400 capitalize">
-              {item.category}
-            </p>
-          </div>
-          <button
-            onClick={() => toggleFavorite(item)}
-            className="absolute top-0 right-0 hover:cursor-pointer"
-          >
-            <FavoriteIcon className="text-red-600 size-5" />
-          </button>
-        </li>
-      ))}
+      {limitFavorites.map((item) => {
+        const prd = item?.product;
+        const images = prd?.product_by_category?.[0]?.images;
+
+        return (
+          <li key={item.id} className="w-full h-auto flex relative">
+            <span className="block w-34 h-20 overflow-hidden">
+              <img
+                className="w-full h-full object-cover object-center"
+                src={images?.[0]}
+                alt={prd.name}
+                loading="lazy"
+                width={400}
+                height={400}
+              />
+            </span>
+            <div className="w-full h-auto pl-4">
+              <p className="font-semibold text-stone-900">{prd.name}</p>
+              <span>${prd.price}</span>
+              <p className="text-sm italic text-stone-400 capitalize">
+                {prd.category}
+              </p>
+            </div>
+            <button
+              onClick={() => toggleFavorite(item)}
+              className="absolute top-0 right-0 hover:cursor-pointer"
+            >
+              <FavoriteIcon className="text-red-600 size-5" />
+            </button>
+          </li>
+        );
+      })}
       {favorites.length >= 3 && (
         <Link
           to="/favorites"
