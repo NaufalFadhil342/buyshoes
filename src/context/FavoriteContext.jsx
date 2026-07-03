@@ -55,34 +55,55 @@ const FavoriteProvider = ({ children }) => {
 
   const toggleFavorite = async (product) => {
     if (!user) return;
-
-    const alreadyFavorited = isFavorite(product.id);
-
-    setFavorites((prev) =>
-      alreadyFavorited
-        ? prev.filter((item) => item.id !== product.id)
-        : [product, ...prev],
-    );
+    const productId = product.id;
+    const alreadyFavorited = isFavorite(productId);
 
     if (alreadyFavorited) {
+      const prevFavorites = favorites;
+      setFavorites((prev) =>
+        prev.filter((item) => item.product_id !== productId),
+      );
+
       const { error } = await supabase
         .from("favorites")
         .delete()
         .eq("user_id", user.id)
-        .eq("product_id", product.id);
+        .eq("product_id", productId);
 
       if (error) {
         console.error("Failed to remove favorite:", error);
-        setFavorites((prev) => [product, ...prev]);
+        setFavorites(prevFavorites);
       }
     } else {
-      const { error } = await supabase
+      const optimisticEntry = {
+        id: `temp-${productId}`,
+        product_id: productId,
+        product: {
+          name: product.name,
+          price: product.price,
+          category: product.category,
+          product_by_category: [{ images: product.images }],
+        },
+      };
+      setFavorites((prev) => [optimisticEntry, ...prev]);
+
+      const { data, error } = await supabase
         .from("favorites")
-        .insert({ user_id: user.id, product_id: product.id });
+        .insert({ user_id: user.id, product_id: productId })
+        .select(
+          "*, product:products(name, price, category, created_at, product_by_category(images))",
+        )
+        .single();
 
       if (error) {
         console.error("Failed to add favorite:", error);
-        setFavorites((prev) => prev.filter((item) => item.id !== product.id));
+        setFavorites((prev) =>
+          prev.filter((item) => item.product_id !== productId),
+        );
+      } else {
+        setFavorites((prev) =>
+          prev.map((item) => (item.product_id === productId ? data : item)),
+        );
       }
     }
   };
