@@ -53,12 +53,14 @@ const FavoriteCardItem = () => {
           </li>
         );
       })}
-      <Link
-        to="/favorites"
-        className="w-auto h-12 bg-accent hover:bg-accent-dark text-white flex items-center justify-center transition-colors duration-150 ease-in-out"
-      >
-        {favorites.length > 1 ? "View All Items" : "View Item"}
-      </Link>
+      {favorites.length > 0 && (
+        <Link
+          to="/favorites"
+          className="w-auto h-12 bg-accent hover:bg-accent-dark text-white flex items-center justify-center transition-colors duration-150 ease-in-out"
+        >
+          {favorites.length > 1 ? "View All Items" : "View Item"}
+        </Link>
+      )}{" "}
     </ul>
   );
 };
