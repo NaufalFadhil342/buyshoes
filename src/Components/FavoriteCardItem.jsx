@@ -27,7 +27,11 @@ const FavoriteCardItem = () => {
               <img
                 className="w-full h-full object-cover object-center"
                 src={images?.[0]}
-                alt={prd?.name}
+                alt={
+                  prd?.name
+                    ? `${prd.name} product image`
+                    : "Favorite product image"
+                }
                 loading="lazy"
                 width={400}
                 height={400}
@@ -49,14 +53,12 @@ const FavoriteCardItem = () => {
           </li>
         );
       })}
-      {favorites.length > 0 && (
-        <Link
-          to="/favorites"
-          className="w-auto h-12 bg-accent hover:bg-accent-dark text-white flex items-center justify-center transition-colors duration-150 ease-in-out"
-        >
-          {favorites.length > 1 ? "View All Items" : "View Item"}
-        </Link>
-      )}
+      <Link
+        to="/favorites"
+        className="w-auto h-12 bg-accent hover:bg-accent-dark text-white flex items-center justify-center transition-colors duration-150 ease-in-out"
+      >
+        {favorites.length > 1 ? "View All Items" : "View Item"}
+      </Link>
     </ul>
   );
 };

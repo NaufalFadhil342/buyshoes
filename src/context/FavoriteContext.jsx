@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/supabase";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useRef } from "react";
 
 const FavoriteContext = createContext();
 
@@ -7,6 +7,7 @@ const FavoriteProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const pendingProductIdsRef = useRef(new Set());
 
   useEffect(() => {
     const init = async () => {
@@ -56,55 +57,70 @@ const FavoriteProvider = ({ children }) => {
   const toggleFavorite = async (product) => {
     if (!user) return;
     const productId = product.id;
-    const alreadyFavorited = isFavorite(productId);
+    if (pendingProductIdsRef.current.has(productId)) return;
 
-    if (alreadyFavorited) {
-      const prevFavorites = favorites;
-      setFavorites((prev) =>
-        prev.filter((item) => item.product_id !== productId),
-      );
+    pendingProductIdsRef.current.add(productId);
+    try {
+      const alreadyFavorited = isFavorite(productId);
 
-      const { error } = await supabase
-        .from("favorites")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("product_id", productId);
-
-      if (error) {
-        console.error("Failed to remove favorite:", error);
-        setFavorites(prevFavorites);
-      }
-    } else {
-      const optimisticEntry = {
-        id: `temp-${productId}`,
-        product_id: productId,
-        product: {
-          name: product.name,
-          price: product.price,
-          category: product.category,
-          product_by_category: [{ images: product.images }],
-        },
-      };
-      setFavorites((prev) => [optimisticEntry, ...prev]);
-
-      const { data, error } = await supabase
-        .from("favorites")
-        .insert({ user_id: user.id, product_id: productId })
-        .select(
-          "*, product:products(name, price, category, created_at, product_by_category(images))",
-        )
-        .single();
-
-      if (error) {
-        console.error("Failed to add favorite:", error);
+      if (alreadyFavorited) {
+        const removedFavorite = favorites.find(
+          (item) => item.product_id === productId,
+        );
         setFavorites((prev) =>
           prev.filter((item) => item.product_id !== productId),
         );
+
+        const { error } = await supabase
+          .from("favorites")
+          .delete()
+          .eq("user_id", user.id)
+          .eq("product_id", productId);
+
+        if (error) {
+          console.error("Failed to remove favorite:", error);
+          if (removedFavorite) {
+            setFavorites((prev) =>
+              prev.some((item) => item.product_id === productId)
+                ? prev
+                : [removedFavorite, ...prev],
+            );
+          }
+        }
       } else {
-        setFavorites((prev) =>
-          prev.map((item) => (item.product_id === productId ? data : item)),
-        );
+        const optimisticEntry = {
+          id: `temp-${productId}`,
+          product_id: productId,
+          product: {
+            name: product.name,
+            price: product.price,
+            category: product.category,
+            product_by_category: [{ images: product.images }],
+          },
+        };
+        setFavorites((prev) => [optimisticEntry, ...prev]);
+
+        const { data, error } = await supabase
+          .from("favorites")
+          .insert({ user_id: user.id, product_id: productId })
+          .select(
+            "*, product:products(name, price, category, created_at, product_by_category(images))",
+          )
+          .single();
+
+        if (error) {
+          console.error("Failed to add favorite:", error);
+          setFavorites((prev) =>
+            prev.filter((item) => item.product_id !== productId),
+          );
+        } else {
+          setFavorites((prev) =>
+            prev.map((item) => (item.product_id === productId ? data : item)),
+          );
+        }
       }
+    } finally {
+      pendingProductIdsRef.current.delete(productId);
     }
   };
 
