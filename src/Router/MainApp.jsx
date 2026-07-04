@@ -42,7 +42,7 @@ const MainApp = () => {
     observer.observe(custSupportRef.current);
 
     return () => observer.disconnect();
-  });
+  }, []);
 
   useEffect(() => {
     let ticking = false;
