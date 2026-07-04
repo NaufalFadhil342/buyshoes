@@ -26,6 +26,7 @@ const MobileNavbar = ({
   isFavoriteActive,
   isSearchBarActive,
   isScrolled,
+  topOffset = 0,
 }) => {
   const [showNavbar, setShowNavbar] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -58,7 +59,8 @@ const MobileNavbar = ({
 
   return (
     <nav
-      className={`w-full h-auto py-4 flex xl:hidden items-center justify-between sm:gap-8 ${isScrolled ? "fixed top-0 left-0 px-[5%] sm:px-12 lg:px-20 bg-white z-40 shadow-md shadow-stone-900/5" : "relative"}`}
+      className={`w-full h-auto py-4 flex xl:hidden items-center justify-between sm:gap-8 ${isScrolled ? "fixed left-0 px-[5%] sm:px-12 lg:px-20 bg-white z-40 shadow-md shadow-stone-900/5" : "relative"}`}
+      style={isScrolled ? { top: topOffset } : undefined}
     >
       <div className="w-auto h-auto flex items-center gap-2 md:gap-4">
         <button onClick={() => setShowNavbar(true)}>

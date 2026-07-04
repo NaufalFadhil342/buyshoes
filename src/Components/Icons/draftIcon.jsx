@@ -11,6 +11,7 @@ import Instagram from "@iconify-react/bi/instagram";
 import TwitterX from "@iconify-react/bi/twitter-x";
 import Tiktok from "@iconify-react/bi/tiktok";
 import Rating from "@iconify-react/material-symbols/star";
+import SortFilters from "@iconify-react/carbon/global-filters";
 
 const shopbag = () => (
   <ShopBagIcon className="size-6 md:size-8 text-stone-300" />
@@ -35,6 +36,7 @@ const instagramIcon = (props) => <Instagram {...props} />;
 const twitterXIcon = (props) => <TwitterX {...props} />;
 const tiktokIcon = (props) => <Tiktok {...props} />;
 const ratingIcon = (props) => <Rating {...props} />;
+const sortFiltersIcon = (props) => <SortFilters {...props} />;
 
 export {
   shopbag,
@@ -50,4 +52,5 @@ export {
   twitterXIcon,
   tiktokIcon,
   ratingIcon,
+  sortFiltersIcon,
 };

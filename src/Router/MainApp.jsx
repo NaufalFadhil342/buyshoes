@@ -12,25 +12,53 @@ import { ensureSession } from "@/utils/supabase";
 const MainApp = () => {
   const [sessionReady, setSessionReady] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolledRef = useRef(false);
+
   const headerRef = useRef(null);
+  const custSupportRef = useRef(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [custSupportHeight, setCustSupportHeight] = useState(0);
 
   useEffect(() => {
     ensureSession().then(() => setSessionReady(true));
   }, []);
 
   useEffect(() => {
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
-  }, []);
+    if (!headerRef.current || !custSupportRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      if (isScrolledRef.current) return;
+
+      for (const entry of entries) {
+        if (entry.target === headerRef.current) {
+          setHeaderHeight(entry.contentRect.height);
+        } else if (entry.target === custSupportRef.current) {
+          setCustSupportHeight(entry.contentRect.height);
+        }
+      }
+    });
+
+    observer.observe(headerRef.current);
+    observer.observe(custSupportRef.current);
+
+    return () => observer.disconnect();
+  });
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY > 0;
+        isScrolledRef.current = scrolled;
+        setIsScrolled(scrolled);
+        ticking = false;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -42,8 +70,10 @@ const MainApp = () => {
         <ShoppingProvider>
           <LanguageProvider>
             <div ref={headerRef}>
-              <CusSupport isScrolled={isScrolled} />
-              <Navbar isScrolled={isScrolled} />
+              <div ref={custSupportRef}>
+                <CusSupport isScrolled={isScrolled} />
+              </div>
+              <Navbar isScrolled={isScrolled} topOffset={custSupportHeight} />
             </div>
             {isScrolled && <div style={{ height: headerHeight }} />}
 
