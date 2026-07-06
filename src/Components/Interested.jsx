@@ -35,12 +35,16 @@ const ProductInterested = () => {
 
             return (
               <li key={prd.id} className="flex-none w-72 h-auto">
-                <Link to={`/${prd.slug}`} className="block h-full">
+                <Link
+                  to={`/${prd.slug}`}
+                  className="block h-full"
+                  onClick={() => window.scrollTo({ top: 0 })}
+                >
                   <div className="w-full h-100 overflow-hidden relative">
                     <img
                       className="w-full h-full object-cover object-center"
-                      src={item.images[0]}
-                      alt={prd.id}
+                      src={item?.images?.[0]}
+                      alt={`${prd.name} product image`}
                       width={500}
                       height={500}
                       loading="lazy"

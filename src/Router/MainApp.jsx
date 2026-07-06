@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState, useLayoutEffect } from "react";
 import { Outlet } from "react-router";
 import CusSupport from "../Components/Header/CusSupport";
 import Navbar from "../Components/Header/Navbar";
@@ -7,10 +7,8 @@ import { FavoriteProvider } from "../context/FavoriteContext";
 import { ShoppingProvider } from "../context/ShoppingContext";
 import Footer from "../Components/Footer";
 import { Loading } from "@/Components/ui/Loading";
-import { ensureSession } from "@/utils/supabase";
 
 const MainApp = () => {
-  const [sessionReady, setSessionReady] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isScrolledRef = useRef(false);
 
@@ -19,8 +17,11 @@ const MainApp = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [custSupportHeight, setCustSupportHeight] = useState(0);
 
-  useEffect(() => {
-    ensureSession().then(() => setSessionReady(true));
+  useLayoutEffect(() => {
+    if (!headerRef.current || !custSupportRef.current) return;
+
+    setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+    setCustSupportHeight(custSupportRef.current.getBoundingClientRect().height);
   }, []);
 
   useEffect(() => {
@@ -28,25 +29,21 @@ const MainApp = () => {
 
     const observer = new ResizeObserver((entries) => {
       if (isScrolledRef.current) return;
-
       for (const entry of entries) {
-        if (entry.target === headerRef.current) {
+        if (entry.target === headerRef.current)
           setHeaderHeight(entry.contentRect.height);
-        } else if (entry.target === custSupportRef.current) {
+        else if (entry.target === custSupportRef.current)
           setCustSupportHeight(entry.contentRect.height);
-        }
       }
     });
 
     observer.observe(headerRef.current);
     observer.observe(custSupportRef.current);
-
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     let ticking = false;
-
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
@@ -57,12 +54,9 @@ const MainApp = () => {
         ticking = false;
       });
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  if (!sessionReady) return <Loading />;
 
   return (
     <>

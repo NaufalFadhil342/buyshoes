@@ -11,7 +11,11 @@ const Products = ({ product, item, selectedItem }) => {
 
   return (
     <div key={product.id} className="w-full h-auto">
-      <Link className="relative h-full w-full" to={`/${product.slug}`}>
+      <Link
+        className="relative h-full w-full"
+        to={`/${product.slug}`}
+        onClick={() => window.scrollTo({ top: 0 })}
+      >
         <button
           className="absolute z-3 top-4 right-4 hover:cursor-pointer"
           onClick={(e) => {
@@ -28,12 +32,12 @@ const Products = ({ product, item, selectedItem }) => {
         <span className="w-full h-100 block">
           <img
             className="w-full h-full object-cover object-center"
-            src={item.images[0]}
+            src={item?.images?.[0]}
             alt={`${product.name} product image`}
             loading="lazy"
             width={500}
             height={500}
-          />
+          />{" "}
         </span>
         <div className="w-full h-auto py-4 flex flex-col gap-2">
           <h3 className="text-xl font-semibold text-stone-900">
