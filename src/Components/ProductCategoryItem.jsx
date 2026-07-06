@@ -37,6 +37,7 @@ const ProductCategoryItem = ({
                  hover:cursor-pointer`}
               onClick={() => toProductDetail(`/${product?.slug}`)}
               role="link"
+              tabIndex={0}
             >
               <div className="w-full h-80 overflow-hidden relative">
                 <img

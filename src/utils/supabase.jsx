@@ -15,9 +15,15 @@ export async function ensureSession() {
       } = await supabase.auth.getSession();
       if (!session) {
         const { error } = await supabase.auth.signInAnonymously();
-        if (error) console.error("Anonymous sign-in error:", error);
+        if (error) {
+          console.error("Anonymous sign-in error:", error);
+          throw error;
+        }
       }
-    })();
+    })().catch((err) => {
+      sessionPromise = null;
+      throw err;
+    });
   }
   return sessionPromise;
 }
