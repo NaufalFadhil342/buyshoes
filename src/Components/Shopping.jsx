@@ -104,8 +104,8 @@ const Shopping = () => {
                           <span className="block w-26 h-20 overflow-hidden">
                             <img
                               className="w-full h-full object-cover object-center"
-                              src={item.images[0]}
-                              alt={prd.name}
+                              src={item?.images?.[0]}
+                              alt={`${prd.name} product image`}
                               loading="lazy"
                               width={500}
                               height={500}

@@ -1,9 +1,9 @@
-import { sortFiltersIcon as SortFiltersIcon } from "@/Components/Icons/draftIcon";
-import Products from "@/Components/Products";
 import { useProducts } from "@/hooks/useApi";
 import { SkeletonCard } from "@/Components/ui/SkeletonCard";
+import { sortFiltersIcon as SortFiltersIcon } from "@/Components/Icons/draftIcon";
+import Products from "@/Components/Products";
 
-const Shoes = () => {
+const Women = () => {
   const { products, loading, error } = useProducts();
 
   if (loading) return <SkeletonCard />;
@@ -15,7 +15,7 @@ const Shoes = () => {
   return (
     <section id="shoes">
       <div className="w-full h-auto mb-12">
-        <h2 className="text-4xl font-bold text-stone-900">Shoes</h2>
+        <h2 className="text-4xl font-bold text-stone-900">Women</h2>
         <div className="flex items-center justify-between w-full mt-12">
           <span className="text-primary">{products.length} results</span>
           <button className="w-auto h-14 flex items-center gap-3 px-4 bg-transparent sm:border sm:border-primary hover:cursor-pointer">
@@ -56,4 +56,4 @@ const Shoes = () => {
   );
 };
 
-export default Shoes;
+export default Women;

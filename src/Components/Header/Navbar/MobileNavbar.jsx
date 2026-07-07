@@ -26,7 +26,7 @@ const MobileNavbar = ({
   isFavoriteActive,
   isSearchBarActive,
   isScrolled,
-  topOffset = 0,
+  topOffset,
 }) => {
   const [showNavbar, setShowNavbar] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -125,6 +125,7 @@ const MobileNavbar = ({
                     : "hover:border-b-2 hover:border-stone-700"
                 }`}
                   to={link.path}
+                  onClick={() => window.scrollTo({ top: 0 })}
                 >
                   {link.name}
                 </NavLink>

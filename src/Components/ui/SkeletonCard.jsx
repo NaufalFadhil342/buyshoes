@@ -1,8 +1,8 @@
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "./Skeleton";
 
 export function SkeletonCard() {
   return (
-    <div className="w-full grid grid-cols-4 gap-4 items-center">
+    <div className="w-full grid grid-cols-4 gap-4 items-center my-12 px-20">
       <div className="w-full shrink-0 rounded bg-stone-300 p-4">
         <Skeleton className="w-full h-50 rounded-md" />
         <div className="mt-4">

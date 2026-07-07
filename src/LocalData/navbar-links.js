@@ -2,11 +2,11 @@ import { account, favorite, shopbag } from "../Components/Icons/draftIcon";
 
 export const navbarLinks = [
   { name: "Shoes", path: "/shoes", keyName: "shoes" },
-  { name: "Men", path: "/shoes/men", keyName: "men" },
-  { name: "Women", path: "/shoes/women", keyName: "women" },
-  { name: "Trending", path: "/shoes/trending", keyName: "trending" },
-  { name: "Sports", path: "/shoes/sports", keyName: "sports" },
-  { name: "Brands", path: "/shoes/brands", keyName: "brands" },
+  { name: "Men", path: "/men", keyName: "men" },
+  { name: "Women", path: "/women", keyName: "women" },
+  { name: "Trending", path: "/trending", keyName: "trending" },
+  { name: "Sports", path: "/sports", keyName: "sports" },
+  { name: "Brands", path: "/brands", keyName: "brands" },
 ];
 
 export const usersMenu = [

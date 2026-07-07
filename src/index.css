@@ -80,7 +80,8 @@
     @apply w-full h-auto bg-stone-900;
   }
 
-  #shoes {
+  #shoes,
+  #men {
     @apply w-full h-auto my-12 px-[5%] sm:px-12 lg:px-20;
   }
 }

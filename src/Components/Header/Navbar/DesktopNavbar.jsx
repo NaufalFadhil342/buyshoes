@@ -12,7 +12,7 @@ const DesktopNavbar = ({
   isFavoriteActive,
   navbarRef,
   isScrolled,
-  topOffset = 0,
+  topOffset,
 }) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -69,6 +69,7 @@ const DesktopNavbar = ({
                     : "hover:border-b-2 hover:border-stone-700"
                 }`}
               to={link.path}
+              onClick={() => window.scrollTo({ top: 0 })}
             >
               {link.name}
             </NavLink>

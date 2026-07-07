@@ -12,6 +12,11 @@ const ProductCategoryItem = ({
 }) => {
   const navigate = useNavigate();
 
+  const toProductDetail = (path) => {
+    navigate(path);
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="flex gap-4 mx-[5%] sm:mx-12 lg:mx-20">
@@ -30,13 +35,15 @@ const ProductCategoryItem = ({
               key={item.id}
               className={`flex-[0_0_80%] xs:flex-[0_0_60%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_20%] h-auto border border-background hover:border-stone-700
                  hover:cursor-pointer`}
-              onClick={() => navigate(`/${product.slug}`)}
+              onClick={() => toProductDetail(`/${product?.slug}`)}
+              role="link"
+              tabIndex={0}
             >
               <div className="w-full h-80 overflow-hidden relative">
                 <img
                   className="w-full h-full object-cover object-center"
-                  src={item.images[0]}
-                  alt={product?.name}
+                  src={item?.images?.[0]}
+                  alt={`${product?.name} product image`}
                   loading="lazy"
                   width={500}
                   height={500}

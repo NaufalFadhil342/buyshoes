@@ -1,5 +1,6 @@
 import { supabase } from "@/utils/supabase";
 import { createContext, useEffect, useState, useRef } from "react";
+import { ensureSession } from "@/utils/supabase";
 
 const FavoriteContext = createContext();
 
@@ -11,6 +12,7 @@ const FavoriteProvider = ({ children }) => {
 
   useEffect(() => {
     const init = async () => {
+      await ensureSession();
       const {
         data: { session },
       } = await supabase.auth.getSession();
