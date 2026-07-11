@@ -59,7 +59,7 @@ const MobileNavbar = ({
 
   return (
     <nav
-      className={`w-full h-auto py-4 flex xl:hidden items-center justify-between sm:gap-8 ${isScrolled ? "fixed left-0 px-[5%] sm:px-12 lg:px-20 bg-white z-40 shadow-md shadow-stone-900/5" : "relative"}`}
+      className={`w-full h-auto py-4 flex xl:hidden items-center justify-between sm:gap-8 ${isScrolled ? "fixed left-0 px-[5%] sm:px-12 lg:px-20 bg-white z-20 shadow-md shadow-stone-900/5" : "relative"}`}
       style={isScrolled ? { top: topOffset } : undefined}
     >
       <div className="w-auto h-auto flex items-center gap-2 md:gap-4">
@@ -99,10 +99,14 @@ const MobileNavbar = ({
       {showNavbar && (
         <div className="w-screen h-screen top-0 left-0 fixed z-20 bg-white">
           <div className="w-full h-auto relative flex justify-between items-center my-4 px-6">
-            <div className="text-2xl font-bold">
+            <Link
+              to="/"
+              className="text-2xl font-bold"
+              onClick={() => setShowNavbar(false)}
+            >
               <span>buy</span>
               <span className="underline text-accent">Shoes</span>
-            </div>
+            </Link>
             <button
               className="font-medium text-lg hover:text-accent"
               onClick={() => setShowNavbar(false)}
@@ -125,7 +129,10 @@ const MobileNavbar = ({
                     : "hover:border-b-2 hover:border-stone-700"
                 }`}
                   to={link.path}
-                  onClick={() => window.scrollTo({ top: 0 })}
+                  onClick={() => {
+                    window.scrollTo({ top: 0 });
+                    setShowNavbar(false);
+                  }}
                 >
                   {link.name}
                 </NavLink>

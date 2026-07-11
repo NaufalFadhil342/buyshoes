@@ -6,6 +6,8 @@ import PrevArrowIcon from "@iconify-react/ep/arrow-left-bold";
 import NextArrowIcon from "@iconify-react/ep/arrow-right-bold";
 import NavMenuIcon from "@iconify-react/mdi/menu";
 import ArrowRightThinIcon from "@iconify-react/mdi/arrow-right-thin";
+import ArrowUpIcon from "@iconify-react/ep/arrow-up";
+import ArrowDownIcon from "@iconify-react/ep/arrow-down";
 import CloseIcon from "@iconify-react/material-symbols/close";
 import Instagram from "@iconify-react/bi/instagram";
 import TwitterX from "@iconify-react/bi/twitter-x";
@@ -31,6 +33,8 @@ const navMenu = () => (
   <NavMenuIcon className="size-6 md:size-8 text-stone-300" />
 );
 const arrowRightThin = (props) => <ArrowRightThinIcon {...props} />;
+const chevronUp = (props) => <ArrowUpIcon {...props} />;
+const chevronDown = (props) => <ArrowDownIcon {...props} />;
 const close = (props) => <CloseIcon {...props} />;
 const instagramIcon = (props) => <Instagram {...props} />;
 const twitterXIcon = (props) => <TwitterX {...props} />;
@@ -47,6 +51,8 @@ export {
   nextArrow,
   navMenu,
   arrowRightThin,
+  chevronUp,
+  chevronDown,
   close,
   instagramIcon,
   twitterXIcon,
