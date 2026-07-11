@@ -55,7 +55,7 @@ const ProductListPage = ({ gender = null, title }) => {
       </div>
       {filteredProducts.length === 0 ? (
         <p className="text-stone-500 text-3xl font-bold w-fit mx-auto">
-          The items didn't has that option
+          No items match the selected filters
         </p>
       ) : (
         <div className="w-full h-auto grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">

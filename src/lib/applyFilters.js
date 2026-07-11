@@ -3,12 +3,12 @@ export const applyFilters = (products, filters) => {
 
   if (filters.genders.length) {
     result = result.filter((p) =>
-      p.product_by_category?.some((cat) =>
-        filters.genders.includes(cat.gender),
+      p.product_by_category?.some(
+        (cat) =>
+          cat.gender === "unisex" || filters.genders.includes(cat.gender),
       ),
     );
   }
-
   if (filters.sizes.length) {
     result = result.filter((p) =>
       p.sizes?.some((s) => filters.sizes.includes(s.size)),

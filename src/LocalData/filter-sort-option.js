@@ -2,7 +2,7 @@ export const sortOptions = [
   { name: "Price (low - high)", value: "low" },
   { name: "Newest", value: "new" },
   { name: "Best sellers", value: "best seller" },
-  { name: "Price (high - slow)", value: "high" },
+  { name: "Price (high - low)", value: "high" },
 ];
 
 export const sizes = [
