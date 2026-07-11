@@ -45,7 +45,7 @@ export const useProducts = () => {
         const { data, error } = await supabase
           .from("products")
           .select(
-            `*, product_by_category(images, gender, id), product_meta(*)`,
+            `*, product_by_category(images, gender, id), product_meta(*), brand:brands(*), sizes:product_sizes(*)`,
           );
 
         if (error) throw error;

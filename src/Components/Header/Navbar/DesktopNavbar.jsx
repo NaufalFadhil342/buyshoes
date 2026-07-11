@@ -44,7 +44,7 @@ const DesktopNavbar = ({
 
   return (
     <nav
-      className={`w-full h-auto py-4 hidden xl:flex items-center justify-between gap-10 ${isScrolled ? "fixed left-0 bg-white z-40 px-20 shadow-md shadow-stone-900/5" : "relative"}`}
+      className={`w-full h-auto py-4 hidden xl:flex items-center justify-between gap-10 ${isScrolled ? "fixed left-0 bg-white z-20 px-20 shadow-md shadow-stone-900/5" : "relative"}`}
       style={isScrolled ? { top: topOffset } : undefined}
     >
       <div className="w-auto h-auto">

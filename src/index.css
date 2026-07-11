@@ -81,8 +81,13 @@
   }
 
   #shoes,
-  #men {
-    @apply w-full h-auto my-12 px-[5%] sm:px-12 lg:px-20;
+  #men,
+  #women {
+    @apply w-full h-auto my-12 px-[5%] sm:px-12 lg:px-20 relative;
+  }
+
+  #sort-filter {
+    @apply w-full h-screen fixed top-0 left-0 bg-transparent sm:bg-primary/65 z-50;
   }
 }
 

@@ -8,7 +8,7 @@ const CusSupport = ({ isScrolled }) => {
   return (
     <section
       id="cus-support"
-      className={isScrolled ? "fixed top-0 left-0 z-40" : "relative"}
+      className={isScrolled ? "fixed top-0 left-0 z-20" : "relative"}
     >
       <ul className="h-10 flex gap-4 justify-end items-center">
         {cusSupportMenu.map((item, index) => (

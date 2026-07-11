@@ -1,6 +1,8 @@
-import ArrowDownIcon from "@iconify-react/ep/arrow-down";
-import ArrowUpIcon from "@iconify-react/ep/arrow-up";
-import { arrowRightThin as ArrowRightIcon } from "../Icons/draftIcon";
+import {
+  arrowRightThin as ArrowRightIcon,
+  chevronUp as ChevronUp,
+  chevronDown as ChevronDown,
+} from "../Icons/draftIcon";
 
 const AccordionItem = ({ title, children, isOpen, onToggle }) => {
   return (
@@ -18,9 +20,9 @@ const AccordionItem = ({ title, children, isOpen, onToggle }) => {
         ) : (
           <span className="block">
             {isOpen === title ? (
-              <ArrowUpIcon className="size-6 text-stone-400" />
+              <ChevronUp className="size-6 text-stone-400" />
             ) : (
-              <ArrowDownIcon className="size-6 text-stone-400" />
+              <ChevronDown className="size-6 text-stone-400" />
             )}
           </span>
         )}
