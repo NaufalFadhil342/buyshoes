@@ -17,6 +17,7 @@ const ProductListPage = ({ gender = null, title }) => {
   const { products, loading, error } = useCategoryProducts(gender);
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, dispatch] = useReducer(filterReducer, initialFilterState);
+
   useFilterParams(filters, dispatch);
 
   const filteredProducts = useMemo(
