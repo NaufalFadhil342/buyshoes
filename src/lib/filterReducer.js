@@ -27,6 +27,9 @@ export const filterReducer = (state, action) => {
     case "SET_PRICE_RANGE":
       return { ...state, priceRange: action.payload };
 
+    case "HYDRATE_FROM_URL":
+      return { ...state, ...action.payload };
+
     case "RESET":
       return initialFilterState;
 
