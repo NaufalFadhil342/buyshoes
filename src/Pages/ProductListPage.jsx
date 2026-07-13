@@ -10,11 +10,15 @@ import {
   countActiveFilters,
 } from "@/lib/filterReducer";
 import { applyFilters } from "@/lib/applyFilters";
+import { useFilterParams } from "@/hooks/useFilterParams";
+import { buildActiveFilterLabels } from "@/lib/filterLabels";
 
 const ProductListPage = ({ gender = null, title }) => {
   const { products, loading, error } = useCategoryProducts(gender);
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, dispatch] = useReducer(filterReducer, initialFilterState);
+
+  useFilterParams(filters, dispatch);
 
   const filteredProducts = useMemo(
     () => applyFilters(products, filters),
@@ -22,6 +26,11 @@ const ProductListPage = ({ gender = null, title }) => {
   );
 
   const activeFilterCount = countActiveFilters(filters);
+
+  const activeLabels = useMemo(
+    () => buildActiveFilterLabels(filters, products ?? []),
+    [filters, products],
+  );
 
   if (loading) return <SkeletonCard />;
   if (error || !products)
@@ -54,9 +63,22 @@ const ProductListPage = ({ gender = null, title }) => {
         </div>
       </div>
       {filteredProducts.length === 0 ? (
-        <p className="text-stone-500 text-3xl font-bold w-fit mx-auto">
-          No items match the selected filters
-        </p>
+        <div className="text-center w-full">
+          <p className="text-stone-500 text-2xl font-bold">
+            No items match{" "}
+            {activeLabels.length > 0
+              ? activeLabels.map((l) => l.text).join(", ")
+              : "the selected filters"}
+          </p>
+          {activeLabels.length > 0 && (
+            <button
+              onClick={() => dispatch({ type: "RESET" })}
+              className="mt-3 text-sm underline text-stone-600"
+            >
+              Clear all filters
+            </button>
+          )}
+        </div>
       ) : (
         <div className="w-full h-auto grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
           {filteredProducts.map((prd) => {
