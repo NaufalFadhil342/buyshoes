@@ -7,6 +7,7 @@ import { lazy } from "react";
 const MainApp = lazy(() => import("./Router/MainApp"));
 const ProductDetail = lazy(() => import("./Components/ProductDetail"));
 const ProductListPage = lazy(() => import("./Pages/ProductListPage"));
+const WishlistPage = lazy(() => import("./Pages/WishlistPage"));
 
 const createRouter = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const createRouter = createBrowserRouter([
       {
         path: "/women",
         element: <ProductListPage gender="women" title="Women" />,
+      },
+      {
+        path: "/trending",
+        element: <ProductListPage title="Trending" />,
+      },
+      {
+        path: "/favorites",
+        element: <WishlistPage />,
       },
     ],
   },

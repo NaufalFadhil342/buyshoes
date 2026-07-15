@@ -102,3 +102,37 @@ export const useProductDetail = (slug) => {
 
   return { product, loading, error };
 };
+
+export const useFavorite = () => {
+  const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const { data, error } = await supabase
+          .from("favorites")
+          .select(
+            "*, products:products(name, slug, price, detail, category, product_images:product_by_category(images))",
+          );
+
+        if (error) throw error;
+
+        setFavorites(data ?? []);
+        console.log("fetch favorites", data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
+  return { favorites, loading, error };
+};

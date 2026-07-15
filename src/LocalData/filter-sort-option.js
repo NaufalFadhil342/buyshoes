@@ -1,7 +1,7 @@
 export const sortOptions = [
   { name: "Price (low - high)", value: "low" },
   { name: "Newest", value: "new" },
-  { name: "Best sellers", value: "best-seller" },
+  { name: "Best sellers", value: "best" },
   { name: "Price (high - low)", value: "high" },
 ];
 
