@@ -11,7 +11,7 @@ const ProductCategoryItem = ({ items, emblaRef }) => {
             name: item.products?.name,
             price: item.products?.price,
             images: item.images,
-            category: items.products?.category,
+            category: item.products?.category,
           };
 
           return (
