@@ -23,7 +23,7 @@ const Detail = ({ product }) => {
       {items.map((text) => (
         <li key={text} className="flex items-center gap-3">
           <span className="block size-1.5 rounded-full shrink-0 bg-current" />
-          <span classname="text-primary">{text}</span>
+          <span className="text-primary">{text}</span>
         </li>
       ))}
     </ul>
