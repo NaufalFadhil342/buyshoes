@@ -82,7 +82,9 @@
 
   #shoes,
   #men,
-  #women {
+  #women,
+  #trending,
+  #wishlist {
     @apply w-full h-auto my-12 px-[5%] sm:px-12 lg:px-20 relative;
   }
 
