@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFavorite } from "@/hooks/useApi";
 import { SkeletonCard } from "@/Components/ui/SkeletonCard";
 import { shopbag as Shopbag } from "@/Components/Icons/draftIcon";
@@ -6,7 +7,8 @@ import ProductDetailIcon from "@iconify-react/material-symbols/expand-all";
 import { ensureSession, supabase } from "@/utils/supabase";
 
 const WishlistPage = () => {
-  const { favorites, loading, error, setFavorites, setError } = useFavorite();
+  const { favorites, loading, error, setFavorites } = useFavorite();
+  const [deletionError, setDeletionError] = useState(null);
 
   const deleteFavoriteItem = async (productId) => {
     const removedFavorite = favorites.find(
@@ -15,6 +17,8 @@ const WishlistPage = () => {
     setFavorites((prev) =>
       prev.filter((item) => item.product_id !== productId),
     );
+
+    setDeletionError(null);
 
     const rollback = () => {
       if (removedFavorite) {
@@ -39,11 +43,16 @@ const WishlistPage = () => {
         .eq("user_id", user.id);
 
       if (favoriteError) {
-        setError(favoriteError);
+        setDeletionError(
+          favoriteError?.message ||
+            "Unable to remove this item from your wishlist.",
+        );
         rollback();
       }
     } catch (err) {
-      setError(err);
+      setDeletionError(
+        err?.message || "Unable to remove this item from your wishlist.",
+      );
       rollback();
     }
   };
@@ -62,6 +71,9 @@ const WishlistPage = () => {
         <h2 className="text-4xl font-bold text-stone-900">My Wishlist</h2>
         <span className="block text-primary">[{favorites.length}]</span>
       </div>
+      {deletionError ? (
+        <p className="mt-4 text-sm text-red-600">{deletionError}</p>
+      ) : null}
       <div className="w-full h-auto">
         {favorites.length === 0 ? (
           <p className="w-fit max-w-auto sm:max-w-md lg:max-w-xl mx-auto text-center text-stone-500 text-xl font-semibold mt-12">
@@ -100,7 +112,7 @@ const WishlistPage = () => {
                     </h4>
                     <p className="text-primary">${items?.price}</p>
                     <span className="block mt-3 text-stone-500">
-                      {items?.detail.color}
+                      {items?.detail?.color}
                     </span>
                     <div className="w-full h-14 flex items-center gap-4 mt-6">
                       <button className="w-full h-full bg-stone-900 hover:bg-stone-800 hover:cursor-pointer px-4 flex items-center justify-between font-semibold text-white">
