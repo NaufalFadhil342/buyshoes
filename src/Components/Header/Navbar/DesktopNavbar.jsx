@@ -138,7 +138,11 @@ const DesktopNavbar = ({
                     {items?.length === 0 ? (
                       <p className="text-stone-500 text-center">No items yet</p>
                     ) : (
-                      item.keyName === "favorites" && <FavoriteCardItem />
+                      item.keyName === "favorites" && (
+                        <FavoriteCardItem
+                          onClose={() => setShowFavoriteItems(false)}
+                        />
+                      )
                     )}
                   </div>
                 )}
