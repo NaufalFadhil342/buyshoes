@@ -6,7 +6,7 @@ import { FavoriteContext } from "../../../context/FavoriteContext";
 import { ShoppingContext } from "../../../context/ShoppingContext";
 
 const Navbar = ({ isScrolled, topOffset }) => {
-  const { favorites } = useContext(FavoriteContext);
+  const { favorites, toggleFavorite } = useContext(FavoriteContext);
   const { shopping } = useContext(ShoppingContext);
 
   const cartData = {
@@ -44,6 +44,7 @@ const Navbar = ({ isScrolled, topOffset }) => {
         navbarRef={navbarRef}
         isScrolled={isScrolled}
         topOffset={topOffset}
+        toggleFavorite={toggleFavorite}
       />
       <MobileNavbar
         cartData={cartData}
@@ -57,6 +58,7 @@ const Navbar = ({ isScrolled, topOffset }) => {
         navbarRef={navbarRef}
         isScrolled={isScrolled}
         topOffset={topOffset}
+        toggleFavorite={toggleFavorite}
       />
     </header>
   );

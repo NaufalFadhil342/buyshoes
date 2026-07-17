@@ -1,13 +1,7 @@
-import { useContext } from "react";
-import { FavoriteContext } from "../context/FavoriteContext";
 import { favorite as FavoriteIcon } from "../Components/Icons/draftIcon";
 import { Link } from "react-router";
 
-const FavoriteCardItem = ({ onClose }) => {
-  const { favorites, toggleFavorite } = useContext(FavoriteContext);
-
-  const limitFavorites = favorites.slice(0, 3);
-
+const FavoriteCardItem = ({ onClose, favorites = [], toggleFavorite }) => {
   const handleCloseFavoriteCard = () => {
     window.scrollTo({ top: 0 });
     onClose();
@@ -15,7 +9,7 @@ const FavoriteCardItem = ({ onClose }) => {
 
   return (
     <ul className="w-full h-auto flex flex-col gap-4">
-      {limitFavorites.map((item) => {
+      {favorites.slice(0, 3).map((item) => {
         const prd = item?.product;
         const images = prd?.product_by_category?.[0]?.images;
         const favoriteItem = {

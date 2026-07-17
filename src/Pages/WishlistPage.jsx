@@ -1,61 +1,13 @@
-import { useState } from "react";
-import { useFavorite } from "@/hooks/useApi";
+import { useContext } from "react";
 import { SkeletonCard } from "@/Components/ui/SkeletonCard";
 import { shopbag as Shopbag } from "@/Components/Icons/draftIcon";
 import { Link } from "react-router";
 import ProductDetailIcon from "@iconify-react/material-symbols/expand-all";
-import { ensureSession, supabase } from "@/utils/supabase";
+import { FavoriteContext } from "@/context/FavoriteContext";
 
 const WishlistPage = () => {
-  const { favorites, loading, error, setFavorites } = useFavorite();
-  const [deletionError, setDeletionError] = useState(null);
-
-  const deleteFavoriteItem = async (productId) => {
-    const removedFavorite = favorites.find(
-      (item) => item.product_id === productId,
-    );
-    setFavorites((prev) =>
-      prev.filter((item) => item.product_id !== productId),
-    );
-
-    setDeletionError(null);
-
-    const rollback = () => {
-      if (removedFavorite) {
-        setFavorites((prev) =>
-          prev.some((item) => item.product_id === productId)
-            ? prev
-            : [removedFavorite, ...prev],
-        );
-      }
-    };
-
-    try {
-      await ensureSession();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      const { error: favoriteError } = await supabase
-        .from("favorites")
-        .delete()
-        .eq("product_id", productId)
-        .eq("user_id", user.id);
-
-      if (favoriteError) {
-        setDeletionError(
-          favoriteError?.message ||
-            "Unable to remove this item from your wishlist.",
-        );
-        rollback();
-      }
-    } catch (err) {
-      setDeletionError(
-        err?.message || "Unable to remove this item from your wishlist.",
-      );
-      rollback();
-    }
-  };
+  const { favorites, toggleFavorite, loading, error } =
+    useContext(FavoriteContext);
 
   if (loading) return <SkeletonCard />;
   if (error || !favorites)
@@ -71,9 +23,6 @@ const WishlistPage = () => {
         <h2 className="text-4xl font-bold text-stone-900">My Wishlist</h2>
         <span className="block text-primary">[{favorites.length}]</span>
       </div>
-      {deletionError ? (
-        <p className="mt-4 text-sm text-red-600">{deletionError}</p>
-      ) : null}
       <div className="w-full h-auto">
         {favorites.length === 0 ? (
           <p className="w-fit max-w-auto sm:max-w-md lg:max-w-xl mx-auto text-center text-stone-500 text-xl font-semibold mt-12">
@@ -81,10 +30,10 @@ const WishlistPage = () => {
             add your favorite items to your wishlist.
           </p>
         ) : (
-          <ul className="w-full h-auto grid grid-cols-3 gap-6 my-12">
+          <ul className="w-full h-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 my-12">
             {favorites.map((fav) => {
-              const items = fav?.products;
-              const images = items?.product_images?.[0]?.images || [];
+              const items = fav?.product;
+              const images = items?.product_by_category?.[0]?.images || [];
 
               return (
                 <li key={fav.id} className="w-full h-auto">
@@ -101,7 +50,7 @@ const WishlistPage = () => {
                     <button
                       type="button"
                       className="border border-primary size-12 flex items-center justify-center text-xl font-semibold text-stone-500 absolute top-0 right-0 bg-background hover:cursor-pointer"
-                      onClick={() => deleteFavoriteItem(fav.product_id)}
+                      onClick={() => toggleFavorite(items)}
                     >
                       <span className="block mt-0">X</span>
                     </button>

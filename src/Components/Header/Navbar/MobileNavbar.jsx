@@ -27,6 +27,7 @@ const MobileNavbar = ({
   isSearchBarActive,
   isScrolled,
   topOffset,
+  toggleFavorite,
 }) => {
   const [showNavbar, setShowNavbar] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -66,12 +67,12 @@ const MobileNavbar = ({
         <button onClick={() => setShowNavbar(true)}>
           <MenuIcon />
         </button>
-        <Link className="relative" onClick={isFavoriteActive}>
+        <button className="relative" onClick={isFavoriteActive}>
           <FavoriteIcon />
           <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-accent text-white text-xs rounded-full h-4 w-4 md:h-5 md:w-5 flex items-center justify-center">
             {cartData.favorites.length}
           </span>
-        </Link>
+        </button>
       </div>
       <div className="w-full h-auto ml-2">
         <Link
@@ -191,7 +192,11 @@ const MobileNavbar = ({
                 You are not adding your favorite items yet
               </p>
             ) : (
-              <FavoriteCardItem />
+              <FavoriteCardItem
+                onClose={() => setShowFavoriteItems(false)}
+                favorites={cartData.favorites}
+                toggleFavorite={toggleFavorite}
+              />
             )}
           </div>
         )}

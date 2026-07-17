@@ -13,6 +13,7 @@ const DesktopNavbar = ({
   navbarRef,
   isScrolled,
   topOffset,
+  toggleFavorite,
 }) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -141,6 +142,8 @@ const DesktopNavbar = ({
                       item.keyName === "favorites" && (
                         <FavoriteCardItem
                           onClose={() => setShowFavoriteItems(false)}
+                          favorites={cartData.favorites}
+                          toggleFavorite={toggleFavorite}
                         />
                       )
                     )}
