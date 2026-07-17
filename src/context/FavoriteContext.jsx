@@ -31,7 +31,12 @@ const FavoriteProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setFavorites([]);
+      setError(null);
+      setLoading(false);
+      return;
+    }
 
     const loadFavorites = async () => {
       setLoading(true);
