@@ -8,6 +8,7 @@ const FavoriteProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
   const pendingProductIdsRef = useRef(new Set());
 
   useEffect(() => {
@@ -34,15 +35,15 @@ const FavoriteProvider = ({ children }) => {
 
     const loadFavorites = async () => {
       setLoading(true);
+      setError(null);
+
       const { data, error } = await supabase
         .from("favorites")
-        .select(
-          "*, product:products(name, price, category, created_at, product_by_category(images))",
-        )
+        .select("*, product:products(*, product_by_category(images))")
         .eq("user_id", user.id);
 
       if (error) {
-        console.error("Failed to load favorites:", error);
+        setError(error);
       } else {
         setFavorites(data);
       }
@@ -59,8 +60,9 @@ const FavoriteProvider = ({ children }) => {
   const toggleFavorite = async (product) => {
     if (!user) return;
     const productId = product.id;
-    if (pendingProductIdsRef.current.has(productId)) return;
+    setError(null);
 
+    if (pendingProductIdsRef.current.has(productId)) return;
     pendingProductIdsRef.current.add(productId);
     try {
       const alreadyFavorited = isFavorite(productId);
@@ -81,6 +83,8 @@ const FavoriteProvider = ({ children }) => {
 
         if (error) {
           console.error("Failed to remove favorite:", error);
+          setError(error);
+
           if (removedFavorite) {
             setFavorites((prev) =>
               prev.some((item) => item.product_id === productId)
@@ -105,13 +109,13 @@ const FavoriteProvider = ({ children }) => {
         const { data, error } = await supabase
           .from("favorites")
           .insert({ user_id: user.id, product_id: productId })
-          .select(
-            "*, product:products(name, price, category, created_at, product_by_category(images))",
-          )
+          .select("*, product:products(*, product_by_category(images))")
           .single();
 
         if (error) {
           console.error("Failed to add favorite:", error);
+          setError(error);
+
           setFavorites((prev) =>
             prev.filter((item) => item.product_id !== productId),
           );
@@ -126,7 +130,7 @@ const FavoriteProvider = ({ children }) => {
     }
   };
 
-  const value = { favorites, isFavorite, toggleFavorite, loading };
+  const value = { favorites, isFavorite, toggleFavorite, loading, error };
 
   return (
     <FavoriteContext.Provider value={value}>
