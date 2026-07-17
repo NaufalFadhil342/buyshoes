@@ -123,7 +123,6 @@ export const useFavorite = () => {
         if (error) throw error;
 
         setFavorites(data ?? []);
-        console.log("fetch favorites", data);
       } catch (err) {
         setError(err);
       } finally {
@@ -134,5 +133,5 @@ export const useFavorite = () => {
     fetchFavorites();
   }, []);
 
-  return { favorites, loading, error };
+  return { favorites, loading, error, setFavorites, setError };
 };
